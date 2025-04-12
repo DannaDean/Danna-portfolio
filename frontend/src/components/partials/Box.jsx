@@ -7,6 +7,7 @@ const Box = ({
     children,
     className = "",
     bgColor, 
+    flowerRef
   }) => {
     const style = bgColor ? { backgroundColor: bgColor } : {};
   
@@ -19,7 +20,7 @@ const Box = ({
             {button && <div className="box-btn">{button}</div>}
             {children && <div className="box-extra">{children}</div>}
         </div>
-        {flowerImg && <img src={flowerImg} alt="Flower" className="flower-1" />}
+        {flowerImg && <img src={flowerImg} ref={flowerRef} alt="Flower" className="flower-1" />}
       </div>
     );
   };

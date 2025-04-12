@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Hamburger = ({ open, setOpen }) => {
   const handleClick = () => setOpen((prev) => !prev);
 

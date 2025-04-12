@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Box from "../partials/Box";
 import Category from "../partials/Category";
 import myImg from "../../assets/images/daniela.png";
@@ -38,6 +38,30 @@ const About = () => {
     );
   }, []);
 
+  const flowerRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const yPosition = -scrollY * 0.3; 
+
+      if (flowerRef.current) {  
+        gsap.to(flowerRef.current, {
+          y: yPosition,
+          ease: "none",
+          duration: 0.1,
+          immediateRender: true,
+        });
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <section className="about" id="meet">
       <div className="container">
@@ -49,6 +73,7 @@ const About = () => {
           subtitle="I'm Ciubari Daniela, a Full Stack Developer!"
           text="My mission is to help companies like yours achieve their goals through modern and efficient web development solutions. I'm here to turn your ideas into digital reality, delivering engaging and intuitive experiences for your users. Let's bring your vision to life together!"
           flowerImg={flowerImg}
+          flowerRef={flowerRef}
           className="about-one"
           bgColor="#FFDF2B"
         />

@@ -16,6 +16,15 @@ body {
     font-size: 1rem;
     font-weight: 400;
     color: $text;
+    transition: $transition;
+
+    &.light {
+        background-color: rgba(253, 249, 236, 1);
+    }
+
+    &.dark {
+        background-color: $black;
+    }
 }
 h1 {
     font-size: clamp(3rem, 11vw, 13rem);
@@ -106,7 +115,7 @@ a.category:hover {
     padding: 0.75rem 2rem;
     border-radius: $border-radius-2;
     background-color: $text;
-    color: $white;
+    color: rgba(253, 249, 236, 1);
     font-size: 1rem;
     font-weight: 700;
     border: none;
@@ -148,6 +157,30 @@ a.category:hover {
     }
 }
 
+// Dark Light Mode
+body.dark .hero h1,
+body.dark .projects h3,
+body.dark .faq h2 {
+    color: $beige;
+    transition: $transition;
+}
+body.dark header nav {
+    @include respond-to(xsmall) {
+        background-color: $black;
+    }
+}
+body.dark header .line {
+    background-color: $beige !important;
+}
+body.dark .projects button {
+    background-color: $beige;
+    color: $text;
+    transition: $transition;
+}
+body.dark .projects button:hover {
+    color: rgba(253, 249, 236, 1);
+}
+
 // --- Header --- //
 header {
     padding: 3rem 0;
@@ -166,13 +199,14 @@ header {
 
         nav {
             @include flex(1rem);
+            transition: 0.8s ease-in-out;
 
             @include respond-to(xsmall) {
                 @include flex(1rem, column);
                 position: absolute;
                 top: -1.5rem;
                 right: 0;
-                z-index: 10;
+                z-index: 999;
                 width: 100%;
                 height: 100vh;
                 background: $white;
@@ -182,6 +216,10 @@ header {
 
             &.open {
                 transform: translateX(0);
+            }
+
+            .category {
+                cursor: pointer;
             }
         }
 
@@ -249,6 +287,7 @@ header {
     h1 {
         text-align: center;
         margin-bottom: 5rem;
+        transition: $transition;
     }
 
     @include respond-to(xsmall) {
@@ -351,7 +390,7 @@ header {
     img {
         position: absolute;
         right: -90px;
-        bottom: -140px;
+        bottom: -200px;
     }
    }
 
@@ -478,6 +517,7 @@ header {
         }
         .about-one {
             grid-area: box-2;
+            position: relative;
 
             .box-content {
                 @include flex-two(0.5rem, column);
@@ -501,7 +541,7 @@ header {
 
             img {
                 position: absolute;
-                top: 150px;
+                bottom: -800px;
                 right: -50px;
                 z-index: 10;
 

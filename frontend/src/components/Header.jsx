@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useLocalStorage from "use-local-storage";
 import Hamburger from "./partials/Hamburger";
 import Category from "./partials/Category";
-import { Moon } from "akar-icons";
+import { Moon, Sun } from "akar-icons";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useLocalStorage('theme', 'light'); 
+
+  const toggleTheme = () => setIsDarkMode(isDarkMode === 'dark' ? 'light' : 'dark');
+
+  useEffect(() => {
+    if (isDarkMode === 'dark') {
+      document.body.classList.add('dark');
+      document.body.classList.remove('light');
+    } else {
+      document.body.classList.add('light');
+      document.body.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   return (
     <header>
@@ -14,8 +28,12 @@ const Header = () => {
           <Category href="#meet">Meet Daniela</Category>
           <Category href="#faq">FAQ</Category>
           <Category href="#getInTouch">Get in Touch</Category>
-          <Category href="#">
-            <Moon strokeWidth={2} size={16} />
+          <Category href="#" onClick={toggleTheme}>
+            {isDarkMode === 'dark' ? (
+              <Sun strokeWidth={2} size={16} />
+            ) : (
+              <Moon strokeWidth={2} size={16} />
+            )}
           </Category>
         </nav>
         <Hamburger open={open} setOpen={setOpen} />
