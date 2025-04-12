@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+/* COLORS */
+$white: #fff;
+$black: #000;
+$text: #11193B;
+$pink: #F889E7;
+$yellow: #FFDF2B;
+$purple: #D3A7F2;
+$beige: #FAEBC5;
+$rose: #C71E70;
+
+/* BORDER RADIUS */
+$border-radius-1: 16px;
+$border-radius-2: 40px;
+$border-rounded: 50%;
+
+/* TRANSITIONS */
+$transition: .5s ease-in-out;
+
+// Mixins
+@mixin flex($gap: 1rem, $direction: row) {
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    flex-direction: $direction;      
+    gap: $gap;                
+}
+@mixin flex-two($gap: 1rem, $direction: row) {
+    display: flex;
+    flex-direction: $direction;      
+    gap: $gap;                
+}
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == xxsmall {
+      @media (max-width: 500px) { @content; }
+    }
+    @if $breakpoint == xsmall {
+      @media (max-width: 640px) { @content; }
+    }
+    @else if $breakpoint == small {
+      @media (max-width: 768px) { @content; }
+    }
+    @else if $breakpoint == medium {
+      @media (max-width: 1024px) { @content; }
+    }
+    @else if $breakpoint == large {
+      @media (min-width: 1280px) { @content; }
+    }
+    @else if $breakpoint == xlarge {
+      @media (min-width: 1536px) { @content; }
+    }
+  }
+  

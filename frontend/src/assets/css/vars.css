@@ -1,0 +1,19 @@
+:root {
+    /* COLORS */
+    --white: #fff;
+    --black: #000;
+    --text: #11193B;
+    --pink: #F889E7;
+    --yellow: #FFDF2B;
+    --purple: #D3A7F2;
+    --rose: #C71E70;
+    --beige: rgba(250, 235, 197, 1);
+
+    /* BORDER RADIUS */
+    --border-radius-1: 16px;
+    --border-radius-2: 40px;
+    --border-rounded: 50%;
+
+    /* TRANSITIONS */
+    --transition: .5s ease-in-out;
+}
