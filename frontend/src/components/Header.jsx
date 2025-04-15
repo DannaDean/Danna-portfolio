@@ -26,7 +26,7 @@ const Header = () => {
         <nav className={`${open ? "open" : "hidden"}`}>
           <Category href="#projects">Works</Category>
           <Category href="#meet">Meet Daniela</Category>
-          <Category href="#faq">FAQ</Category>
+          <Category href="#facts">Facts</Category>
           <Category href="#getInTouch">Get in Touch</Category>
           <Category href="#" onClick={toggleTheme}>
             {isDarkMode === 'dark' ? (

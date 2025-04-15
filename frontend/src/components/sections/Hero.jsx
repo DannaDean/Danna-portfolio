@@ -14,31 +14,47 @@ const Hero = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
 
       const rotation = (scrollY / maxScroll) * 360;
 
       gsap.to(flowerRef.current, {
         rotation: rotation,
         ease: "none",
-        duration: 0.1
-      })
-    }
+        duration: 0.1,
+      });
+    };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <section className="hero">
       <div className="container">
-        <h1 className="name">Daniela Ciubari</h1>
+        <h1 className="name">
+          {"Daniela Ciubari".split("").map((char, i) => (
+            <span key={i} className="char">
+              {char === " " ? "\u00A0" : char}
+            </span>
+          ))}
+        </h1>
         <Box
-          title={<>Here to make you look <br /> good and win business.</>}
-          text={<>Websites that convert and apps that feel effortless. <br/> Clean, clear, and thoughtfully designed.</>}
+          title={
+            <>
+              Here to make you look <br /> good and win business.
+            </>
+          }
+          text={
+            <>
+              Websites that convert and apps that feel effortless. <br /> Clean,
+              clear, and thoughtfully designed.
+            </>
+          }
           flowerImg={flowerImg}
           flowerRef={flowerRef}
           button={<Button href={"#getInTouch"} />}

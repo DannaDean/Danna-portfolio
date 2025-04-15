@@ -1,7 +1,7 @@
 import { Plus } from 'akar-icons';
 import { useState, useRef, useEffect } from 'react';
 
-const FaqItem = ({ title, text, index, selected, toggle }) => {
+const FactItem = ({ title, text, index, selected, toggle }) => {
   const contentRef = useRef(null);
   const [maxHeight, setMaxHeight] = useState(0);
 
@@ -14,13 +14,13 @@ const FaqItem = ({ title, text, index, selected, toggle }) => {
   }, [selected, index]);
 
   return (
-    <div className="faq-item">
-      <div className="faq-title" onClick={() => toggle(index)}>
+    <div className="fact-item">
+      <div className="fact-title" onClick={() => toggle(index)}>
         <h3>{title}</h3>
         <span className={selected === index ?  'active' : ''}> <Plus strokeWidth={2} size={24} /></span>
       </div>
       <div
-        className={selected === index ? "faq-content show" : "faq-content"}
+        className={selected === index ? "fact-content show" : "fact-content"}
         style={{ maxHeight: selected === index ? `${maxHeight}px` : '0' }}
         ref={contentRef}
       >
@@ -30,4 +30,4 @@ const FaqItem = ({ title, text, index, selected, toggle }) => {
   );
 };
 
-export default FaqItem;
+export default FactItem;
