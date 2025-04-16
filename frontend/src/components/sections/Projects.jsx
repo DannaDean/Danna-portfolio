@@ -1,46 +1,28 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useDispatch, useSelector } from "react-redux";
+import { getProjects } from "../../store/projects/projectsSlice";
 import Box from "../partials/Box";
 import Project from "../partials/Project";
 import Button from "../partials/Button";
+import Spinner from "../partials/Spinner";
 import flowerImg from "../../assets/images/flowers/flower-2.png";
-import proj11 from "../../assets/images/projects/project1-1.png";
-import proj12 from "../../assets/images/projects/project1-1.png";
-import proj21 from "../../assets/images/projects/project2-1.png";
-import proj22 from "../../assets/images/projects/project2-2.png";
 
 const Projects = () => {
-  const projectData = [
-    {
-      srcOne: proj11,
-      srcTwo: proj12,
-      link: "#",
-      title: "Parenting App Website",
-      categories: [
-        "Web Design",
-        "Copywriting",
-        "D2C",
-        "Food",
-        "Sustainability",
-      ],
-    },
-    {
-      srcOne: proj21,
-      srcTwo: proj22,
-      link: "#",
-      title: "Plant-forward Meal Delivery Website",
-      categories: ["Web Design", "AI", "Parenthood"],
-    },
-  ];
-
+  const dispatch = useDispatch();
+  const { projects, isLoading } = useSelector((state) => state.projects);
   const flowerRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(getProjects());
+  }, [dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const yPosition = -scrollY * 0.3; 
+      const yPosition = -scrollY * 0.3;
 
-      if (flowerRef.current) {  
+      if (flowerRef.current) {
         gsap.to(flowerRef.current, {
           y: yPosition,
           ease: "none",
@@ -57,8 +39,12 @@ const Projects = () => {
     };
   }, []);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
-    <section className="hero projects" id="projects">
+    <section className="projects" id="projects">
       <div className="container">
         <Box
           title="Design is in the details."
@@ -69,16 +55,10 @@ const Projects = () => {
         />
 
         <div className="projects-container">
-          {projectData.map((project, index) => (
-            <Project
-              key={index}
-              srcOne={project.srcOne}
-              srcTwo={project.srcTwo}
-              link={project.link}
-              title={project.title}
-              categories={project.categories}
-            />
-          ))}
+          {projects &&
+            projects.map((project) => (
+              <Project key={project._id} {...project} />
+            ))}
         </div>
         <div className="projects-btn">
           <Button text="Load More" />

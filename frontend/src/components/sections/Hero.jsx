@@ -8,8 +8,9 @@ import myImg from "../../assets/images/daniela.png";
 import desktopImg from "../../assets/images/desktop.png";
 import mobileImg from "../../assets/images/mobile.png";
 
-const Hero = () => {
+const Hero = ({ isLoading }) => {
   const flowerRef = useRef(null);
+  const boxRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +33,32 @@ const Hero = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      const letters = document.querySelectorAll(".name .char");
+
+      const tl = gsap.timeline();
+
+      tl.to(letters, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        stagger: {
+          amount: 0.6,
+          from: "start",
+        },
+      })
+
+      tl.to(boxRef.current, { 
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+      }, 0); 
+    }
+  }, [isLoading]);
 
   return (
     <section className="hero">
@@ -59,6 +86,7 @@ const Hero = () => {
           flowerRef={flowerRef}
           button={<Button href={"#getInTouch"} />}
           bgColor="#F889E7"
+          boxRef={boxRef}
         />
 
         <div className="hero-cards">

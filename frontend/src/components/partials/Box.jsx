@@ -7,12 +7,13 @@ const Box = ({
     children,
     className = "",
     bgColor, 
-    flowerRef
+    flowerRef,
+    boxRef,
   }) => {
     const style = bgColor ? { backgroundColor: bgColor } : {};
   
     return (
-      <div className={`box ${className}`} style={style}>
+      <div className={`box ${className}`} style={style} ref={boxRef}>
         <div className="box-content">
             {title && <h2>{title}</h2>}
             {subtitle && <h3>{subtitle}</h3>}

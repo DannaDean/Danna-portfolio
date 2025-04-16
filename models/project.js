@@ -5,6 +5,9 @@ const projectSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    link: {
+        type: String,
+    },
     projectDeskImg: {
         type: String,
         required: true
@@ -13,8 +16,8 @@ const projectSchema = mongoose.Schema({
         type: String,
         required: true
     }, 
-    categories: {
-        type: Object
+    categories:  {
+        type: [String]
     }
 })
 

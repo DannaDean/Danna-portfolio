@@ -313,6 +313,8 @@ header {
 
   .box {
     margin-top: 5rem;
+    opacity: 0;
+    transform: translateY(100%);
 
     .box-content {
         p {
@@ -1026,7 +1028,7 @@ footer {
     }
 }
  
-
+// Preloader
 .preloader {
     position: fixed;
     inset: 0;
@@ -1049,14 +1051,16 @@ footer {
       .bar {
         flex: 1;
         height: 100vh;
+        transform: translateZ(0);
+        opacity: 0.9;
       }
   
-      .bar-0 { background: #FAEBC5; }
-      .bar-1 { background: #F889E7; }
-      .bar-2 { background: #D3A7F2; }
-      .bar-3 { background: #C71E70 }
-      .bar-4 { background: #FFDF2B; }
-      .bar-5 { background: rgb(255, 157, 101); }
+      .bar-0 { background: #FFFBE3; }
+      .bar-1 { background: #FEF0D4; }
+      .bar-2 { background: #FED8A8; }
+      .bar-3 { background: #F7BFA5; }
+      .bar-4 { background: #F2A4A4; }
+      .bar-5 { background: #E88D8D; }
     }
   
     .preloader-name {
@@ -1072,4 +1076,30 @@ footer {
       }
     }
   }
-  
+ 
+// Spinner
+#loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+
+  .loader-inner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid $beige;
+    border-radius: 50%;
+    border-top-color: $rose;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}

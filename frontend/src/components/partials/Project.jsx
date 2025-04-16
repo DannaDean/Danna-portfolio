@@ -1,25 +1,31 @@
-const Project = ({ srcOne, srcTwo, title, categories }) => {
+const Project = ({ 
+  link = '', 
+  projectDeskImg = '', 
+  projectMobileImg = '', 
+  name = '',
+  categories = []
+}) => {
   return (
-    <div className="project-card">
+    <a href={link} className="project-card">
       <div className="images-block">
         <div className="proj-img-one">
-          <img src={srcOne} alt={title} />
+          {projectDeskImg &&  <img src={projectDeskImg} alt={name} />}
         </div>
         <div className="proj-img-two">
-          <img src={srcTwo} alt={title} />
+          {projectMobileImg && <img src={projectMobileImg} alt={name} />}
         </div>
       </div>
       <div className="project-content">
-        <h3>{title}</h3>
+        <h3>{name}</h3>
         <div className="categories">
-          {categories.map((category, index) => (
+          {categories?.map((category, index) => (
             <span key={index} className="category">
               {category}
             </span>
           ))}
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

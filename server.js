@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+app.post('/auth/login', (req, res) => {
+    res.json({
+        success: true,
+    })
+})
+
 mongoose.connect("mongodb://localhost:27017/portfolio")
     .then(() => {
         app.listen(port, () => {
