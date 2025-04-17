@@ -38,8 +38,8 @@ const createProject = async (req, res) => {
         const project = await Project.create({
             name,
             link,
-            projectDeskImg: `http://localhost:${process.env.PORT}/static/${deskFile.filename}`,
-            projectMobileImg: `http://localhost:${process.env.PORT}/static/${mobileFile.filename}`,
+            projectDeskImg: `http://localhost:${process.env.PORT}/static/projects/${deskFile.filename}`,
+            projectMobileImg: `http://localhost:${process.env.PORT}/static/projects/${mobileFile.filename}`,
             categories: categories ? JSON.parse(categories) : []
         });
 

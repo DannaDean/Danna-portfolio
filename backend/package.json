@@ -1,20 +1,20 @@
 {
   "name": "dani-portfolio",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "backend/server.js",
   "scripts": {
-    "server": "nodemon server.js",
-    "front": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run front\""
+   "dev": "nodemon server.js",  
+    "start": "npm run dev"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "axios": "^1.8.4",
-    "concurrently": "^9.1.2",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
     "multer": "^1.4.5-lts.2",
