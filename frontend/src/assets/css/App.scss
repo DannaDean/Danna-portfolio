@@ -1,59 +1,5 @@
 @use "./Vars" as *;
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: rgba(253, 249, 236, 1);
-  font-family: "Figtree", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  color: $text;
-  transition: $transition;
-
-  &.light {
-    background-color: rgba(253, 249, 236, 1);
-  }
-
-  &.dark {
-    background-color: $black;
-  }
-}
-h1 {
-  font-size: clamp(3rem, 11vw, 13rem);
-  line-height: clamp(3.2rem, 11vw, 14rem);
-  letter-spacing: clamp(-0.05rem, -0.5vw, -0.16rem);
-}
-h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: clamp(3rem, 5.5vw, 4.4rem);
-  letter-spacing: clamp(-0.1rem, -0.4vw, -0.16rem);
-}
-
-h3 {
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  line-height: clamp(1.6rem, 3vw, 2.25rem);
-  letter-spacing: clamp(-0.02rem, -0.1vw, -0.03rem);
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.685rem;
-  letter-spacing: -0.023rem;
-}
-
-a {
-  text-decoration: none;
-  color: $text;
-}
-
 /* Scrollbar */
 ::-webkit-scrollbar-track {
   background-color: transparent;
@@ -962,70 +908,73 @@ footer {
             }
         }
       }
-  
-      form {
-        .custom-field {
-          position: relative;
-          width: 100%;
-          font-size: 1rem;
-          margin-top: 1.5rem;
-          display: inline-block;
-          --field-padding: 1rem;
-  
-          input,
-          textarea {
-            background: none;
-            padding: 1.25rem var(--field-padding);
-            border-radius: $border-radius-1;
-            width: 100%;
-            outline: none;
-            font-size: 1rem;
-            border: 2px solid $text;
-            transition: $transition;
-  
-            &:focus {
-              border-color: rgb(255, 157, 101);
-            }
-  
-            & + .placeholder {
-              left: 8px;
-              padding: 0 5px;
-            }
-  
-            &:focus + .placeholder {
-              top: 0;
-              font-size: 10px;
-              color: rgb(255, 157, 101);
-              background: rgba(253, 249, 236, 1);
-              width: auto;
-            }
-          }
-  
-          .placeholder {
-            position: absolute;
-            left: var(--field-padding);
-            width: calc(100% - (var(--field-padding) * 2));
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            top: 30px;
-            line-height: 100%;
-            transform: translateY(-50%);
-            color: #aaa;
-            transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
-          }
+    }
+}
 
-          textarea {
-            resize: none;
-            }
-        }
+// Form
+form {
+  .custom-field {
+    position: relative;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    display: inline-block;
+    --field-padding: 1rem;
 
-        button {
-            width: 100%;
-            margin-top: 1rem;
-        }
+    input,
+    textarea {
+      background: none;
+      padding: 1.25rem var(--field-padding);
+      border-radius: $border-radius-1;
+      width: 100%;
+      outline: none;
+      font-size: 1rem;
+      border: 2px solid $text;
+      color: $text;
+      transition: $transition;
+
+      &:focus {
+        border-color: rgb(255, 157, 101);
+      }
+
+      & + .placeholder {
+        left: 8px;
+        padding: 0 5px;
+      }
+
+      &:focus + .placeholder,
+      &:valid + .placeholder {
+        top: 0;
+        font-size: 10px;
+        color: rgb(255, 157, 101);
+        background: rgba(253, 249, 236, 1);
+        width: auto;
       }
     }
+
+    .placeholder {
+      position: absolute;
+      left: var(--field-padding);
+      width: calc(100% - (var(--field-padding) * 2));
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      top: 30px;
+      line-height: 100%;
+      transform: translateY(-50%);
+      color: #aaa;
+      transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+    }
+
+    textarea {
+      resize: none;
+      }
+  }
+
+  button {
+      width: 100%;
+      margin-top: 1rem;
+  }
 }
  
 // Preloader
@@ -1075,7 +1024,7 @@ footer {
         opacity: 0;
       }
     }
-  }
+}
  
 // Spinner
 #loading {

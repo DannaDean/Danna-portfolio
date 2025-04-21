@@ -1,0 +1,39 @@
+@use "./Vars" as *;
+
+.login-page {
+    .login-form {
+        width: 50%;
+        margin-top: 100px;
+
+        @include respond-to(xsmall) {
+            width: 100%;
+          }
+
+        .placeholder {
+            color: $text;
+        }
+
+        input {
+            &:focus {
+                border-color: rgba(255, 183, 78, 1);
+            }
+
+            &:focus + .placeholder,
+            &:valid + .placeholder {
+                color: $text;
+                background: rgb(255, 157, 101);
+              }
+        }
+
+        .btn {
+            &:hover svg {
+                rotate: 0deg;
+                transform: translateX(10px);
+            }
+
+            @include respond-to(xsmall) {
+                width: 100%;
+            }
+        }
+    }
+}

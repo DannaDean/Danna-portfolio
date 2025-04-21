@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useDispatch, useSelector } from "react-redux";
-import { getProjects } from "../../store/projects/projectsSlice";
+import { getProjects } from "../../store/slices/projectsSlice";
 import Box from "../partials/Box";
 import Project from "../partials/Project";
 import Button from "../partials/Button";
@@ -39,9 +39,9 @@ const Projects = () => {
     };
   }, []);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <section className="projects" id="projects">

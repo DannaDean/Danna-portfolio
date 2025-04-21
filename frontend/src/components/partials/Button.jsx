@@ -1,6 +1,6 @@
 import { ArrowRight } from "akar-icons";
 
-const Button = ({text = "Get in Touch", bgColor, href}) => {
+const Button = ({text = "Get in Touch", bgColor, href, type}) => {
     const style = bgColor ? { backgroundColor: bgColor } : {};
 
     if (href) {
@@ -13,7 +13,7 @@ const Button = ({text = "Get in Touch", bgColor, href}) => {
     }
 
     return (
-        <button className="btn" style={style}>
+        <button className="btn" type={type} style={style}>
             {text}
             <ArrowRight strokeWidth={2} size={24} />
         </button>

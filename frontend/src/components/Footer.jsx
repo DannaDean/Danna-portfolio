@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import Box from "./partials/Box";
 import Popup from "./partials/Popup";
 import Button from "./partials/Button";
+import Form from "./partials/Form";
 import InputField from "./partials/InputField";
 import flowerImg from "../assets/images/flowers/flower-4.png";
 import FooterBox from "./partials/FooterBox";
@@ -73,12 +74,12 @@ const Footer = () => {
       {showPopup && (
         <Popup onClose={() => setShowPopup(false)}>
           <h3>Send a message</h3>
-          <form>
-            <InputField placeholder="Your Name" required />
+          <Form>
+            <InputField type="text" placeholder="Your Name" required />
             <InputField type="email" placeholder="Your Email" required />
             <InputField type="textarea" placeholder="Your Message" rows={5} required />
             <Button text="Send"></Button>
-          </form>
+          </Form>
         </Popup>
       )}
     </>

@@ -1,32 +1,32 @@
-import { useState } from "react";
-import './assets/css/App.scss'
-import Navbar from './components/Header'
-import Footer from './components/Footer'
-import Hero from "./components/sections/Hero";
-import Projects from "./components/sections/Projects";
-import About from "./components/sections/About";
-import Skills from "./components/sections/Skills";
-import Fact from "./components/sections/Fact";
-import Preloader from "./components/partials/Preloader";
+import { Routes, Route } from 'react-router-dom';
+import './assets/css/App.scss';
+
+import Layout from './components/Layout';
+import DashLayout from './components/DashLayout';
+
+import Home from './pages/Home';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
-    <>
-    {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-    {!isLoading && (
-      <div className="inner-wrapper">
-        <Navbar />
-        <Hero isLoading={isLoading} />
-        <Projects />
-        <About />
-        <Skills />
-        <Fact />
-        <Footer />
-      </div>
-    )}
-  </>
+    <Routes>
+        {/* Public Layout */}
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Route>
+     
+     
+      {/* Dashboard Layout */}
+      <Route path="/dashboard" element={<DashLayout />}>
+        <Route index element={<Dashboard />} />
+        {/* <Route path="create" element={<CreateProject />} /> */}
+        {/* <Route path="edit/:id" element={<EditProject />} /> */}
+      </Route>
+    </Routes>
   );
 }
 

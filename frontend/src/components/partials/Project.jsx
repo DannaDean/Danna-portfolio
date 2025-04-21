@@ -1,22 +1,22 @@
 const Project = ({ 
   link = '', 
-  projectDeskImg = '', 
-  projectMobileImg = '', 
-  name = '',
+  deskImg = '', 
+  mobileImg = '', 
+  title = '',
   categories = []
 }) => {
   return (
-    <a href={link} className="project-card">
+    <a href={link} className="project-card" target="_blank">
       <div className="images-block">
         <div className="proj-img-one">
-          {projectDeskImg &&  <img src={projectDeskImg} alt={name} />}
+          {deskImg &&  <img src={deskImg} alt={title} />}
         </div>
         <div className="proj-img-two">
-          {projectMobileImg && <img src={projectMobileImg} alt={name} />}
+          {mobileImg && <img src={mobileImg} alt={title} />}
         </div>
       </div>
       <div className="project-content">
-        <h3>{name}</h3>
+        <h3>{title}</h3>
         <div className="categories">
           {categories?.map((category, index) => (
             <span key={index} className="category">

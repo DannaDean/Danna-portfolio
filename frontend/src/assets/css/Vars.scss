@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 /* COLORS */
 $white: #fff;
 $black: rgba(23, 23, 23, 1);
@@ -51,5 +57,54 @@ $transition: .5s ease-in-out;
     @else if $breakpoint == xlarge {
       @media (min-width: 1536px) { @content; }
     }
+  }
+
+  // General css
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: rgba(253, 249, 236, 1);
+    font-family: "Figtree", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: $text;
+    transition: $transition;
+  
+    &.light {
+      background-color: rgba(253, 249, 236, 1);
+    }
+  
+    &.dark {
+      background-color: $black;
+    }
+  }
+  h1 {
+    font-size: clamp(3rem, 11vw, 13rem);
+    line-height: clamp(3.2rem, 11vw, 14rem);
+    letter-spacing: clamp(-0.05rem, -0.5vw, -0.16rem);
+  }
+  h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: clamp(3rem, 5.5vw, 4.4rem);
+    letter-spacing: clamp(-0.1rem, -0.4vw, -0.16rem);
+  }
+  
+  h3 {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: clamp(1.6rem, 3vw, 2.25rem);
+    letter-spacing: clamp(-0.02rem, -0.1vw, -0.03rem);
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.685rem;
+    letter-spacing: -0.023rem;
+  }
+  
+  a {
+    text-decoration: none;
+    color: $text;
   }
   

@@ -1,5 +1,4 @@
 const User = require('../models/user');
-const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -41,10 +40,6 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array())
-        }
 
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
@@ -80,12 +75,24 @@ const register = async (req, res) => {
     }
 };
 
-const me = async (req, res) => {
-    
+const getUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+
+        if(!user) {
+            return res.status(404).json({ messaje: 'User not found' })
+        }
+
+        const { passwordHash, ...userData } = user._doc;
+
+        res.status(201).json({userData});
+    } catch (error) {
+        res.status(500).json({ messaje: 'No access' })
+    }
 };
 
 module.exports = {
     register,
     login,
-    me
+    getUser
 }
