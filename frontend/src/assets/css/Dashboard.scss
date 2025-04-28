@@ -8,6 +8,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
 
+  // Sidebar
   #sidebar {
     box-sizing: border-box;
     height: 100vh;
@@ -74,7 +75,6 @@
       }
 
       @include respond-to(small) {
-        
       }
     }
 
@@ -122,6 +122,7 @@
     }
   }
 
+  // Toggle Btn
   #toggle-btn {
     min-width: 50px;
     height: 50px;
@@ -146,4 +147,91 @@
   .dashboard-content {
     padding: 3rem 1.5rem;
   }
-}
+
+  // Table
+  .table {
+    background: rgba(white, 0.75);
+    border: solid 1px table(border-color);
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  
+    tr + tr {
+      border-top: solid 1px table(border-color);
+    }
+  
+    tr:nth-child(odd) td {
+      background: #e0e5e6;
+    }
+  
+    td,
+    th {
+      padding: 5px 10px;
+      text-align: left;
+    }
+  
+    th {
+      background: #e0e5e6;
+      font-weight: 600;
+    }
+  
+    // Mobile-first: stacked table
+    &,
+    tbody,
+    tr,
+    td {
+      display: block;
+    }
+  
+    td::before {
+      display: inline-block;
+      font-weight: 600;
+      width: 25%;
+    }
+  
+    td:nth-child(1)::before {
+      content: "Rank";
+    }
+  
+    td:nth-child(2)::before {
+      content: "City";
+    }
+  
+    td:nth-child(3)::before {
+      content: "Country";
+    }
+  
+    td:nth-child(4)::before {
+      content: "Population";
+    }
+  
+    th {
+      display: none;
+    }
+  
+    @media (min-width: 768px) {
+      display: table;
+  
+      tbody {
+        display: table-row-group;
+      }
+  
+      tr {
+        display: table-row;
+      }
+  
+      td::before {
+        display: none;
+      }
+  
+      td,
+      th {
+        display: table-cell;
+      }
+  
+      th {
+        display: table-cell;
+      }
+    }
+  }
+}  

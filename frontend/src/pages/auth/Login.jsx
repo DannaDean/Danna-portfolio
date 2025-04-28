@@ -14,10 +14,10 @@ import { login, selectIsAuth } from "../../store/slices/authSlice";
 const Login = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
@@ -27,8 +27,16 @@ const Login = () => {
     mode: 'onChange'
   });
 
-  const onSubmit = (values) => {
-    dispatch(login(values))
+  const onSubmit = async (values) => {
+    const data =  await dispatch(login(values));
+
+    if (login.rejected.match(data)) {
+      // alert error from payload
+      return alert(data.payload?.message || 'Authorization failed');
+    }
+    if (data.payload?.token) {
+      localStorage.setItem('token', data.payload.token);
+    }
   };
   
   if (isAuth) {
@@ -58,7 +66,7 @@ const Login = () => {
               {...register("password", { required: "Write your password" })}
             />
 
-            <Button type="submit" text="Login"></Button>
+            <Button disabled={!isValid} type="submit" text="Login"></Button>
           </Form>
         </Box>
       </div>

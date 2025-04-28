@@ -4,8 +4,6 @@ const { register, login, getUser} = require('../controllers/auth')
 const { registerValidator, loginValidator } = require('../validations')
 const {checkAuth, handleValidationErrors} = require('../utils/index');
 
-// Show path where to store the images
-
 // Login
 router.post('/login', loginValidator, handleValidationErrors, login);
 

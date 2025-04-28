@@ -78,6 +78,12 @@ a.category:hover {
       rotate: 90deg;
     }
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }
 .box {
   position: relative;

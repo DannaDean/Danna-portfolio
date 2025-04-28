@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'; 
 import PropTypes from 'prop-types';
 
-const SidebarItem = ({ icon: Icon, text, href = '#', active = false }) => {
+const SidebarItem = ({ icon: Icon, text, href = '#', active = false, onClick }) => {
   const className = `sidebar-item ${active ? 'active' : ''}`;
 
   return (
     <li className={className}>
-      <Link to={href}>
+      <Link to={href} onClick={onClick}>
         <Icon strokeWidth={2} size={30} />
         <span>{text}</span>
       </Link>

@@ -1,4 +1,6 @@
 const Project = require('../models/project');
+const fs = require('fs');
+const path = require('path');
 
 const getAll = async (req, res) => {
     try {
@@ -7,22 +9,6 @@ const getAll = async (req, res) => {
         res.status(200).json(projects);
     } catch (error) {
         res.status(500).json({ message: "Coundn't find the list of projects. Try again" })
-    }
-};
-
-const getOne = async (req, res) => {
-    try {
-        const projectId = req.params.id;
-
-        const project = await Project.findById(projectId);
-
-        if (!project) {
-            return res.status(404).json({ message: "Project not found" });
-        }
-
-        res.status(200).json(project);
-    } catch (error) {
-        res.status(500).json({ message: "Coundn't find the project. Try again" })
     }
 };
 
@@ -54,6 +40,24 @@ const remove = async (req, res) => {
             return res.status(404).json({ message: "Project not found" });
         }
 
+        const deleteImage = (imagePath) => {
+            if (imagePath) {
+                const filename = path.basename(imagePath);
+        
+                const fullPath = path.join(__dirname, '..', 'assets', 'projects', filename);
+                fs.unlink(fullPath, (err) => {
+                    if (err) {
+                        console.error(`Error deleting file: ${fullPath}`, err.message);
+                    } else {
+                        console.log(`Deleted file: ${fullPath}`);
+                    }
+                });
+            }
+        };
+
+        deleteImage(doc.deskImg);
+        deleteImage(doc.mobileImg);
+
         res.status(200).json({ success: true });
     } catch (error) {
         res.status(500).json({ message: "Couldn't delete the project. Try again" });
@@ -63,6 +67,33 @@ const remove = async (req, res) => {
 const update = async (req, res) => {
     try {
         const projectId = req.params.id;
+
+        const existingProject = await Project.findById(projectId);
+        if (!existingProject) {
+            return res.status(404).json({ message: "Project not found" })
+        }
+
+        const deleteImage = (imagePath) => {
+            if (imagePath) {
+                const filename = path.basename(imagePath);
+                const fullPath = path.join(__dirname, '..', 'assets', 'projects', filename);
+                fs.unlink(fullPath, (err) => {
+                    if (err) {
+                        console.error(`Error deleting file: ${fullPath}`);
+                    } else {
+                        console.log(`Deleted file: ${fullPath}`);
+                    }
+                })
+            }
+        };
+
+        if (req.body.deskImg && req.body.deskImg !== existingProject.deskImg) {
+            deleteImage(existingProject.deskImg);
+        }
+
+        if (req.body.mobileImg && req.body.mobileImg !== existingProject.mobileImg) {
+            deleteImage(existingProject.mobileImg);
+        }
 
         await Project.updateOne(
             {
@@ -85,7 +116,6 @@ const update = async (req, res) => {
 
 module.exports = {
     getAll,
-    getOne,
     create,
     remove,
     update

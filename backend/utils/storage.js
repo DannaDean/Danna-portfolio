@@ -1,24 +1,24 @@
-// const multer = require('multer');
-// const path = require('path');
-// const fs = require('fs');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
-// const createStorage = (folderName) => {
-//     const fullPath = path.join(__dirname, '..', 'assets', folderName);
+// Dynamic storage generator
+const createStorage = (folderName = '') => {
+    const fullPath = path.join('assets', folderName);
 
-//     // Ensure folder exists
-//     if (!fs.existsSync(fullPath)) {
-//         fs.mkdirSync(fullPath, { recursive: true });
-//     }
+    // Check if the folder exists, if not create it
+    if (!fs.existsSync(fullPath)) {
+        fs.mkdirSync(fullPath, { recursive: true });
+    }
 
-//     return multer.diskStorage({
-//         destination: function (req, file, cb) {
-//             cb(null, fullPath);
-//         },
-//         filename: function (req, file, cb) {
-//             const uniqueSuffix = Date.now() + path.extname(file.originalname);
-//             cb(null, file.fieldname + '-' + uniqueSuffix);
-//         }
-//     });
-// };
+    return multer.diskStorage({
+        destination: (_, __, cb) => {
+            cb(null, fullPath);
+        },
+        filename: (_, file, cb) => {
+            cb(null, file.originalname);
+        },
+    });
+};
 
-// module.exports = createStorage;
+module.exports = createStorage;

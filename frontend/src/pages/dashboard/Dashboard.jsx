@@ -4,7 +4,7 @@ import "../../assets/css/Dashboard.scss";
 const Dashboard = () => {
   return (
     <>
-        <div class="container">
+        <div className="container">
           <h2>Hello World</h2>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis
@@ -15,7 +15,7 @@ const Dashboard = () => {
             veritatis voluptates perspiciatis, cupiditate pariatur.
           </p>
         </div>
-        <div class="container">
+        <div className="container">
           <h2>Example Heading</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic
@@ -31,7 +31,7 @@ const Dashboard = () => {
             nemo explicabo delectus, et quos vero cum?
           </p>
         </div>
-        <div class="container">
+        <div className="container">
           <h2>Lorem Ipsum</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore

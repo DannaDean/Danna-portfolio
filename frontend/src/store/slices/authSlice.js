@@ -2,6 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from '../services/authService';
 
 // Thunks
+export const registration = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
+  try {
+    return await authService.registration(userData);
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
+});
+
 export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
   try {
     return await authService.login(userData);
@@ -10,21 +18,14 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
   }
 });
 
-export const fetchAuth = createAsyncThunk('auth/getUser', async (_, thunkAPI) => {
+export const getUser = createAsyncThunk('auth/getUser', async (_, thunkAPI) => {
   try {
-    return await authService.fetchAuth();
+    return await authService.getUser();
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data);
   }
 });
 
-export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  try {
-    await authService.logout();
-  } catch (err) {
-    return thunkAPI.rejectWithValue(err.response.data);
-  }
-});
 
 // Slice
 const authSlice = createSlice({
@@ -46,6 +47,22 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // register
+      .addCase(registration.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registration.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(registration.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload?.message || 'Registration failed';
+        state.user = null;
+      })
+
       // login
       .addCase(login.pending, (state) => {
         state.isLoading = true;
@@ -63,17 +80,17 @@ const authSlice = createSlice({
       })
 
       // getCurrentUser
-      .addCase(fetchAuth.pending, (state) => {
+      .addCase(getUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchAuth.fulfilled, (state, action) => {
+      .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchAuth.rejected, (state, action) => {
+      .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload?.message || 'Login failed';
+        state.message = action.payload?.message || 'Cound find user';
         state.user = null;
       })
 

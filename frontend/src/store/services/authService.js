@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from "../axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API_URL = `${BACKEND_URL}/auth/`;
 
 // Register User
-const register = async (userData) => {
+const registration = async (userData) => {
     const response = await axios.post(API_URL + "register", userData, {
         withCredentials: true,
     })
@@ -20,16 +20,15 @@ const login = async (userData) => {
 };
 
 // Get User
-const fetchAuth = async () => {
-    console.log("API URL:", API_URL)
-    const response = await axios.get(API_URL + "getUser");
+const getUser = async () => {
+    const response = await axios.get(API_URL + "user");
     return response.data;
 }
 
 const projectsService = {
     login,
-    register,
-    fetchAuth
+    registration,
+    getUser
 }
 
 export default projectsService;
