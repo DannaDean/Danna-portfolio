@@ -1,28 +1,26 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
-import { deleteFact, getFacts } from "../../../store/slices/factsSlice";
+import { deleteMessage, getMessages } from "../../../store/slices/contactSlice";
 import "../../../assets/css/Dashboard.scss";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import TableItem from "../../../components/dashboard/TableItem";
-import { Plus } from "akar-icons";
 
-const Facts = () => {
+const ContactForm = () => {
   const dispatch = useDispatch();
-  const { facts } = useSelector((state) => state.facts);
+  const { messages } = useSelector((state) => state.contact);
   useEffect(() => {
-    dispatch(getFacts());
+    dispatch(getMessages());
   }, [dispatch]);
 
-  const handleDeleteFact = (id) => {
+  const handleDeleteContact = (id) => {
     confirmAlert({
       title: 'Confirm to delete',
-      message: 'Are you sure you want to delete this fact?',
+      message: 'Are you sure you want to delete this message?',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => dispatch(deleteFact(id))
+          onClick: () => dispatch(deleteMessage(id))
         },
         {
           label: 'No'
@@ -33,33 +31,31 @@ const Facts = () => {
 
   return (
     <>
-      <h2>All Facts</h2>
-      <Link to={`/dashboard/create/fact`}  className="btn create-btn">
-        Create Fact
-        <Plus strokeWidth={2} size={24} />
-      </Link>
+      <h2 style={{marginBottom: 25}}>All Messages</h2>
       <table className="table">
         <thead>
           <tr>
             <th>Nr.</th>
-            <th>Title</th>
+            <th>Name</th>
+            <th>Email</th>
             <th>Text</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {facts &&
-            facts.map((fact, index) => (
+          {messages &&
+            messages.map((message, index) => (
               <TableItem
-                key={fact._id}
-                id={fact._id}
+                key={message._id}
+                id={message._id}
                 data={{
                   nr: index + 1,
-                  title: fact.title,
-                  text: fact.text,
+                  name: message.name,
+                  email: message.email,
+                  text: message.text,
                 }}
-                type="fact"
-                onDeleteClick={handleDeleteFact}
+                onDeleteClick={handleDeleteContact}
+                showEdit={false} 
               />
             ))}
         </tbody>
@@ -68,4 +64,4 @@ const Facts = () => {
   );
 };
 
-export default Facts;
+export default ContactForm;

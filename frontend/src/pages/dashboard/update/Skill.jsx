@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSkill, getSkills } from "../../../store/slices/skillsSlice";
+import { updateSkill, deleteImage, getSkills } from "../../../store/slices/skillsSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../../store/axios";
 import "../../../assets/css/Dashboard.scss";
 import Form from "../../../components/partials/Form";
 import InputField from "../../../components/partials/InputField";
 import Button from "../../../components/partials/Button";
+import { TrashCan } from "akar-icons";
 
 const EditSkill = () => {
   const dispatch = useDispatch();
@@ -56,12 +57,10 @@ const EditSkill = () => {
 
       const updatedSkill = {
         title,
-        image: imageUrl,
+        image: imageUrl || "",
       };
 
-      await dispatch(
-        updateSkill({ id, updateData: updatedSkill })
-      ).unwrap();
+      await dispatch(updateSkill({ id, updateData: updatedSkill })).unwrap();
 
       navigate("/dashboard/skills");
     } catch (error) {
@@ -69,40 +68,43 @@ const EditSkill = () => {
     }
   };
 
+  const handleDeleteImage = async () => {
+    try {
+      await dispatch(deleteImage(id)).unwrap();
+      setImagePreview(null);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
-      <div className="container">
-        <h2>Update skill: </h2>
-        <Form onSubmit={handleSubmit}>
-          <InputField
-            type="text"
-            placeholder="Skill title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <InputField
-            type="file"
-            placeholder="Image"
-            onChange={ handleChangeFile }
-          />
-          {imagePreview && (
-            <>
-              <div
-                className="delete"
-                onClick={() => {
-                  setImage(null);
-                  setImagePreview("");
-                }}
-              >
-                x
-              </div>
-              <img src={imagePreview} alt="Uploaded Preview" />
-            </>
-          )}
-          <Button type="submit" text="Update" />
-        </Form>
-      </div>
+      <h2>Update skill - {title}</h2>
+      <Form onSubmit={handleSubmit} className="skill-form">
+        <InputField
+          type="text"
+          placeholder="Skill title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <InputField
+          type="file"
+          placeholder="Image"
+          onChange={handleChangeFile}
+        />
+        {imagePreview && (
+          <div className="img-preview">
+            <div
+              className="delete"
+              onClick={() => handleDeleteImage()}
+            >
+             <TrashCan strokeWidth={2} size={16} />
+            </div>
+            <img src={imagePreview} alt="Uploaded Preview" />
+          </div>
+        )}
+        <Button type="submit" text="Update" />
+      </Form>
     </>
   );
 };

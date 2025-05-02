@@ -114,9 +114,55 @@ const update = async (req, res) => {
     }
 }
 
+const removeImage = async (req, res) => {
+    const { id } = req.params;
+    const { imageType } = req.body; // "desktop" or "mobile"
+  
+    try {
+      const project = await Project.findById(id);
+  
+      if (!project) {
+        return res.status(404).json({ message: "Project not found" });
+      }
+  
+      // Determine which image to delete based on imageType
+      let imagePath;
+      if (imageType === "desktop") {
+        imagePath = project.deskImg;
+        project.deskImg = "";
+      } else if (imageType === "mobile") {
+        imagePath = project.mobileImg;
+        project.mobileImg = "";
+      }
+  
+      // Delete the image from the file system
+      if (imagePath) {
+        const filename = path.basename(imagePath);
+        const fullPath = path.join(__dirname, "..", "assets", "projects", filename);
+  
+        fs.unlink(fullPath, (err) => {
+          if (err) {
+            console.error(`Error deleting file: ${fullPath}`, err.message);
+          } else {
+            console.log(`Deleted file: ${fullPath}`);
+          }
+        });
+      }
+  
+      // Save the updated project
+      await project.save();
+  
+      res.status(200).json({ message: "Image deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Error deleting image" });
+    }
+};
+  
+
 module.exports = {
     getAll,
     create,
     remove,
-    update
+    update,
+    removeImage,
 }

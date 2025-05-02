@@ -3,6 +3,7 @@ import authSlice from './slices/authSlice';
 import projectsSlice from './slices/projectsSlice';
 import skillsSlice from './slices/skillsSlice';
 import factsSlice from './slices/factsSlice';
+import contactSlice from './slices/contactSlice';
 
 export const store = configureStore(({
     reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore(({
         projects: projectsSlice,
         skills: skillsSlice,
         facts: factsSlice,
+        contact: contactSlice,
     }
 }))

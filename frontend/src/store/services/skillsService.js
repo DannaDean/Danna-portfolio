@@ -23,11 +23,17 @@ const updateSkill = async ({id, updateData}) => {
     return response.data;
 }
 
+const deleteImage = async (skillId) => {
+    const response = await axios.delete(`${API_URL}${skillId}/delete-image`);
+    return response.data;
+}
+
 const skillsService = {
     getSkills,
     createSkill,
     deleteSkill,
-    updateSkill
+    updateSkill,
+    deleteImage
 }
 
 export default skillsService;

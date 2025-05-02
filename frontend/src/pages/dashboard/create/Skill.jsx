@@ -7,6 +7,7 @@ import "../../../assets/css/Dashboard.scss";
 import Form from "../../../components/partials/Form";
 import InputField from "../../../components/partials/InputField";
 import Button from "../../../components/partials/Button";
+import { TrashCan } from "akar-icons";
 
 const CreateSkill = () => {
   const dispatch = useDispatch();
@@ -54,38 +55,36 @@ const CreateSkill = () => {
   };
   return (
     <>
-      <div className="container">
-        <h2>Add a skill</h2>
-        <Form onSubmit={handleSubmit}>
-          <InputField
-            type="text"
-            placeholder="Skill title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <InputField
-            type="file"
-            placeholder="Image"
-            onChange={handleChangeFile}
-          />
-          {imagePreview && (
-            <>
-              <div
-                className="delete"
-                onClick={() => {
-                  setImage(null);
-                  setImagePreview("");
-                }}
-              >
-                x
-              </div>
-              <img src={imagePreview} alt="Uploaded Image" />
-            </>
-          )}
-          <Button type="submit" text="Create" />
-        </Form>
-      </div>
+      <h2>Add a skill</h2>
+      <Form onSubmit={handleSubmit} className="skill-form">
+        <InputField
+          type="text"
+          placeholder="Skill title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <InputField
+          type="file"
+          placeholder="Image"
+          onChange={handleChangeFile}
+        />
+        {imagePreview && (
+          <div className="img-preview">
+            <div
+              className="delete"
+              onClick={() => {
+                setImage(null);
+                setImagePreview("");
+              }}
+            >
+             <TrashCan strokeWidth={2} size={16} />
+            </div>
+            <img src={imagePreview} alt="Uploaded Image" />
+          </div>
+        )}
+        <Button type="submit" text="Create" />
+      </Form>
     </>
   );
 };

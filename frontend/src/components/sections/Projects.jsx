@@ -1,17 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useDispatch, useSelector } from "react-redux";
 import { getProjects } from "../../store/slices/projectsSlice";
 import Box from "../partials/Box";
 import Project from "../partials/Project";
 import Button from "../partials/Button";
-import Spinner from "../partials/Spinner";
 import flowerImg from "../../assets/images/flowers/flower-2.png";
 
 const Projects = () => {
   const dispatch = useDispatch();
-  const { projects, isLoading } = useSelector((state) => state.projects);
+  const { projects } = useSelector((state) => state.projects);
   const flowerRef = useRef(null);
+  const projectsContainerRef = useRef(null);
+
+  const [visibleCount, setVisibleCount] = useState(2);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     dispatch(getProjects());
@@ -39,9 +42,34 @@ const Projects = () => {
     };
   }, []);
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
+  const handleLoadMore = () => {
+    if (showAll) {
+      setVisibleCount(2);
+      setShowAll(false);
+    } else {
+      const newCount = visibleCount + 2;
+      if (newCount >= projects.length) {
+        setVisibleCount(projects.length);
+        setShowAll(true);
+      } else {
+        setVisibleCount(newCount);
+      }
+    }
+  };
+  
+  useEffect(() => {
+    if (projectsContainerRef.current) {
+      // Get the new project items (the ones that will fade in)
+      const newProjectItems = projectsContainerRef.current.querySelectorAll(".project-card:nth-child(n+" + (visibleCount - 1) + ")");
+      
+      // Animate only the new projects
+      gsap.fromTo(
+        newProjectItems,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 }
+      );
+    }
+  }, [visibleCount]);
 
   return (
     <section className="projects" id="projects">
@@ -54,15 +82,20 @@ const Projects = () => {
           bgColor="#FAEBC5"
         />
 
-        <div className="projects-container">
+        <div className="projects-container" ref={projectsContainerRef}>
           {projects &&
-            projects.map((project) => (
-              <Project key={project._id} {...project} />
-            ))}
+            projects
+              .slice(0, visibleCount)
+              .map((project) => <Project key={project._id} {...project} />)}
         </div>
-        <div className="projects-btn">
-          <Button text="Load More" />
-        </div>
+        {projects.length > 2 && (
+          <div className="projects-btn">
+            <Button
+              text={showAll ? "Show Less" : "Load More"}
+              onClick={handleLoadMore}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

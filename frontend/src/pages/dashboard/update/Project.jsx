@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProject, getProjects } from "../../../store/slices/projectsSlice";
+import { updateProject, deleteImage, getProjects } from "../../../store/slices/projectsSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../../store/axios";
 import "../../../assets/css/Dashboard.scss";
 import Form from "../../../components/partials/Form";
 import InputField from "../../../components/partials/InputField";
 import Button from "../../../components/partials/Button";
+import { TrashCan } from "akar-icons";
 
 const EditProject = () => {
   const dispatch = useDispatch();
@@ -29,11 +30,11 @@ const EditProject = () => {
 
   useEffect(() => {
     if (project) {
-        setTitle(project.title);
-        setLink(project.link || "");
-        setCategories(project.categories.join(", ") || "");
-        setDeskImgPreview(project.deskImg);
-        setMobileImgPreview(project.mobileImg);
+      setTitle(project.title);
+      setLink(project.link || "");
+      setCategories(project.categories.join(", ") || "");
+      setDeskImgPreview(project.deskImg);
+      setMobileImgPreview(project.mobileImg);
     }
   }, [project]);
 
@@ -81,86 +82,101 @@ const EditProject = () => {
         title,
         link,
         categories: categories.split(","),
-        deskImg: desktopImgUrl,
-        mobileImg: mobileImgUrl,
+        deskImg: desktopImgUrl || "", 
+        mobileImg: mobileImgUrl || "",
       };
 
-      await dispatch(updateProject({ id, updateData: updatedProject })).unwrap();
+      await dispatch(
+        updateProject({ id, updateData: updatedProject })
+      ).unwrap();
 
-      navigate('/dashboard/projects');
+      navigate("/dashboard/projects");
     } catch (error) {
       console.error(error);
     }
   };
 
-
+  const handleDeleteImage = async (imageType) => {
+    try {
+      // Dispatch the delete image action
+      await dispatch(deleteImage({ projectId: project._id, imageType })).unwrap();
+  
+      // Update state to remove the image preview
+      if (imageType === "desktop") {
+        setDeskImgPreview(null); // This will remove the desktop image preview immediately
+      } else if (imageType === "mobile") {
+        setMobileImgPreview(null); // This will remove the mobile image preview immediately
+      }
+    } catch (error) {
+      console.error("Error deleting the image", error);
+    }
+  };
+  
 
   return (
     <>
-      <div className="container">
-        <h2>Update project: {project.title}</h2>
-        <Form onSubmit={handleSubmit}>
-          <InputField
-            type="text"
-            placeholder="Project title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <InputField
-            type="text"
-            placeholder="Project link"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-          <InputField
-            type="text"
-            placeholder="Category"
-            value={categories}
-            onChange={(e) => setCategories(e.target.value)}
-            required
-          />
-          <InputField
-            type="file"
-            placeholder="Image for desktop"
-            onChange={(e) => handleChangeFile(e, "desktop")}
-          />
-          {deskImgPreview && (
-            <>
-              <div
-                className="delete"
-                onClick={() => {
-                  setDeskImg(null);
-                  setDeskImgPreview("");
-                }}
-              >
-                x
+      <h2>Update project - {title}</h2>
+      <Form onSubmit={handleSubmit}>
+        <InputField
+          type="text"
+          placeholder="Project title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <InputField
+          type="text"
+          placeholder="Project link"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+        />
+        <InputField
+          type="text"
+          placeholder="Category"
+          value={categories}
+          onChange={(e) => setCategories(e.target.value)}
+          required
+        />
+        <div className="combine-inputs">
+          <div className="combine-box">
+            <InputField
+              type="file"
+              placeholder="Image for desktop"
+              onChange={(e) => handleChangeFile(e, "desktop")}
+            />
+            {deskImgPreview && (
+              <div className="img-preview">
+                <div
+                  className="delete"
+                  onClick={() => handleDeleteImage("desktop")}
+                >
+                  <TrashCan strokeWidth={2} size={16} />
+                </div>
+                <img src={deskImgPreview} alt="Uploaded Desktop Preview" />
               </div>
-              <img src={deskImgPreview} alt="Uploaded Desktop Preview" />
-            </>
-          )}
-          <InputField
-            type="file"
-            placeholder="Image for mobile"
-            onChange={(e) => handleChangeFile(e, "mobile")}
-          />
-          {mobileImgPreview && (
-            <>
-              <div
-                className="delete"
-                onClick={() => {
-                  setMobileImg(null);
-                  setMobileImgPreview("");
-                }}
-              >
-                x
+            )}
+          </div>
+          <div className="combine-box">
+            <InputField
+              type="file"
+              placeholder="Image for mobile"
+              onChange={(e) => handleChangeFile(e, "mobile")}
+            />
+            {mobileImgPreview && (
+              <div className="img-preview">
+                <div
+                  className="delete"
+                  onClick={() => handleDeleteImage("mobile")}
+                >
+                  <TrashCan strokeWidth={2} size={16} />
+                </div>
+                <img src={mobileImgPreview} alt="Uploaded Mobile Preview" />
               </div>
-              <img src={mobileImgPreview} alt="Uploaded Mobile Preview" />
-            </>
-          )}
-          <Button type="submit" text="Update" />
-        </Form>
-      </div>
+            )}
+          </div>
+        </div>
+        <Button type="submit" text="Update" />
+      </Form>
     </>
   );
 };

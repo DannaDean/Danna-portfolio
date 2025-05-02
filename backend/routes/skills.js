@@ -1,19 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const { skillCreateValidator } = require('../validations')
-const { getAll, create, remove, update } = require('../controllers/skills')
+const { getAll, create, remove, update, removeImage } = require('../controllers/skills')
 const {checkAuth, handleValidationErrors} = require('../utils/index');
 
-// @des Get all skills
+// Get all skills
 router.get('/', getAll);
 
-// @des Add a skill
+// Add a skill
 router.post('/', checkAuth, skillCreateValidator, handleValidationErrors, create);
 
-// @des Update a skill
+// Update a skill
 router.patch('/:id', checkAuth, skillCreateValidator, handleValidationErrors, update);
 
-// @des Delete a skill
+// Delete a skill
 router.delete('/:id', checkAuth, remove);
+
+// Delete a single image from a skill
+router.delete("/:id/delete-image", checkAuth, removeImage);
 
 module.exports = router;

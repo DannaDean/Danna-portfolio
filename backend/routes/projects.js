@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { projectCreateValidator } = require('../validations')
-const { getAll, create, remove, update } = require('../controllers/projects')
+const { getAll, create, remove, update, removeImage } = require('../controllers/projects')
 const {checkAuth, handleValidationErrors} = require('../utils/index');
 
 // @des Get all projects
@@ -15,5 +15,8 @@ router.patch('/:id', checkAuth, projectCreateValidator, handleValidationErrors, 
 
 // @des Delete a project
 router.delete('/:id', checkAuth, remove);
+
+// @des Delete a single image from a project
+router.delete("/:id/delete-image", checkAuth, removeImage);
 
 module.exports = router;

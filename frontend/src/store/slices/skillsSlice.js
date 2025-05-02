@@ -46,6 +46,18 @@ export const updateSkill = createAsyncThunk(
     }
 )
 
+export const deleteImage = createAsyncThunk(
+    "skills/deleteImage",
+    async (skillId, thunkAPI) => {
+      try {
+        const response = await skillsService.deleteImage(skillId);
+        return response; 
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+    }
+)  
+
 const skillsSlice =  createSlice({
     name: 'skills',
     initialState: {
@@ -120,6 +132,26 @@ const skillsSlice =  createSlice({
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload?.message || "Failed to update skill";
+            toast.error(state.message)
+        })
+
+        // Delete single image
+        .addCase(deleteImage.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(deleteImage.fulfilled, (state, action) => {
+            state.isLoading = false;
+            const { skillId } = action.payload;
+            const skillToUpdate = state.skills.find((skill) => skill._id === skillId);
+            if (skillToUpdate) {
+                skillToUpdate.image = null; // Set the image to null or empty string
+            }
+            toast.success("Image deleted successfully")
+        })
+        .addCase(deleteImage.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload?.message || "Failed to delete image";
             toast.error(state.message)
         })
     }

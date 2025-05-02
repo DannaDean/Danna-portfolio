@@ -1,3 +1,5 @@
+import defaultImage from "../../assets/images/default.jpg";
+
 const Project = ({ 
   link = '', 
   deskImg = '', 
@@ -9,10 +11,18 @@ const Project = ({
     <a href={link} className="project-card" target="_blank">
       <div className="images-block">
         <div className="proj-img-one">
-          {deskImg &&  <img src={deskImg} alt={title} />}
+        <img
+            src={deskImg || defaultImage}
+            alt={title}
+            onError={(e) => (e.target.src = defaultImage)}
+          />
         </div>
         <div className="proj-img-two">
-          {mobileImg && <img src={mobileImg} alt={title} />}
+        <img
+            src={mobileImg || defaultImage}
+            alt={title}
+            onError={(e) => (e.target.src = defaultImage)}
+          />
         </div>
       </div>
       <div className="project-content">

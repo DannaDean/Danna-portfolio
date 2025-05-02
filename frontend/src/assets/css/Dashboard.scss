@@ -1,19 +1,18 @@
 @use "./Vars" as *;
 
 .dashboard-wrapper {
-  min-height: 100vh;
-  min-height: 100dvh;
   background-color: var(--base-clr);
   color: var(--text-clr);
   display: grid;
   grid-template-columns: auto 1fr;
+  background-color: #fff;
 
   // Sidebar
   #sidebar {
     box-sizing: border-box;
     height: 100vh;
     width: 250px;
-    padding: 0.25rem 1em;
+    padding: 1rem 1rem;
     border-right: 1px solid $text;
     position: sticky;
     top: 0;
@@ -21,13 +20,19 @@
     transition: 300ms ease-in-out;
     overflow: hidden;
     text-wrap: nowrap;
+    z-index: 999;
 
     &.close {
-      padding: 5px;
+      padding: 1rem 5px;
       width: 60px;
 
       a {
         padding: 0.875rem 0.5rem;
+      }
+
+      @include respond-to(small) {
+        width: 100%;
+        padding: 0;
       }
     }
 
@@ -35,9 +40,9 @@
       list-style: none;
 
       li:first-child {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
+        @include flex-two(1rem, row);
+        justify-content: end;
+        padding-bottom: 1rem;
 
         .logo {
           font-weight: 600;
@@ -70,11 +75,41 @@
         }
 
         a:hover {
-          background-color: $beige;
+          background-color: $rose;
+          color: $white;
+        }
+
+        @include respond-to(small) {
+          @include flex-two(0, row);
+          justify-content: center;
+
+          a:hover {
+            background-color: transparent;
+          }
         }
       }
+    }
 
-      @include respond-to(small) {
+    // Toggle Btn
+    #toggle-btn {
+      min-width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 0.5em;
+      background: none;
+      cursor: pointer;
+      transition: 500ms ease;
+
+      svg {
+        transition: 500ms ease;
+      }
+      &.rotate svg {
+        transform: rotate(180deg);
+      }
+
+      &:hover {
+        background-color: $rose;
+        color: $white;
       }
     }
 
@@ -91,7 +126,6 @@
       > ul {
         padding: 0;
         display: grid;
-        grid-auto-columns: 60px;
         grid-auto-flow: column;
         align-items: center;
         overflow-x: scroll;
@@ -122,116 +156,302 @@
     }
   }
 
-  // Toggle Btn
-  #toggle-btn {
-    min-width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 0.5em;
-    background: none;
-    cursor: pointer;
-    transition: 500ms ease;
+  .inner-wrapper {
+    .dashboard-header {
+      @include flex-two(3rem, row);
+      justify-content: end;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid $text;
 
-    svg {
-      transition: 500ms ease;
-    }
-    &.rotate svg {
-      transform: rotate(180deg);
+      .user {
+        @include flex-two(1rem, row);
+        align-items: center;
+
+        .user-text {
+          p {
+            font-weight: 600;
+            line-height: 12px;
+          }
+          span {
+            font-size: 12px;
+          }
+
+          @include respond-to(small) {
+            display: none;
+          }
+        }
+
+        .img-default,
+        img {
+          @include flex(1rem, row);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: $rose;
+          font-size: 1rem;
+          color: $white;
+          object-fit: cover
+        }
+      }
+
+      .logout {
+        @include flex-two(0.5rem, row);
+        font-weight: 600;
+        transition: 500ms ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          color: $rose;
+        }
+      }
+
+      @include respond-to(small) {
+        justify-content: space-between;
+      }
     }
 
-    &:hover {
-      background-color: $beige;
+    .dashboard-content {
+      padding: 2rem;
+
+      .create-btn {
+        background-color: $rose;
+        margin: 2.5rem 0 1rem;
+
+        a {
+          color: $white;
+        }
+
+        &:hover {
+          background-color: $text;
+        }
+      }
+
+      // Table
+      .table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        border-radius: 8px;
+        width: 100%;
+
+        thead {
+         display: none;
+        }
+
+        tr:nth-child(odd) td {
+          background: #e0e5e6;
+        }
+
+        tr {
+          &:first-child td:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+          }
+          &:last-child td:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+          }
+        }
+
+        td {
+          padding: 0.5rem 1rem;
+          text-align: left;
+        }
+
+        tbody {
+          width: 100%;
+          display: block;
+
+          td, tr {
+            display: block;
+            width: 100%;
+          }
+
+          td::before {
+            text-transform: capitalize;
+            display: inline-block;
+            font-weight: 600;
+            width: 35%;
+          }
+
+          td::before {
+            content: attr(data-label);
+          }
+
+          td:last-child::before {
+            content: "Actions";
+          }
+
+          td:last-child {
+            text-align: start;
+
+            svg {
+              cursor: pointer;
+              color: $text;
+              transition: 500ms ease-in-out;
+
+              &:hover {
+                color: $rose;
+              }
+            }
+
+            button {
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
+              margin-left: 0.5rem;
+            }
+          }
+
+          tr img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+          }
+        }
+
+        @media (min-width: 640px) {
+          display: table;
+
+          thead {
+            display: table-header-group;
+            th {
+              background-color: $text;
+              color: $white;
+              font-weight: 600;
+              padding: 1rem;
+              text-align: start;
+  
+              &:first-child {
+                border-top-left-radius: 8px;
+              }
+              &:last-child {
+                border-top-right-radius: 8px;
+                text-align: end;
+              }
+            }
+          }
+
+          tbody {
+            display: table-row-group;
+
+            tr {
+              display: table-row;
+            }
+
+            tr:last-child {
+              border-bottom-left-radius: 8px;
+              td:first-child {
+                border-bottom-left-radius: 8px;
+              }
+            }
+  
+            td::before {
+              display: none;
+            }
+
+            td:last-child {
+              text-align: end;
+              border-bottom-left-radius: 0 !important;
+            }
+  
+            td,
+            th {
+              display: table-cell;
+            }
+  
+            th {
+              display: table-cell;
+            }
+          }
+        }
+      }
+
+      // Form
+      form {
+        .img-preview {
+          position: relative;
+          width: 200px;
+          height: 140px;
+          border-radius: 8px;
+          border: 2px solid $rose;
+          overflow: hidden;
+          margin-top: 1rem;
+  
+          .delete {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: $rose;
+            color: $white;
+            border-bottom-left-radius: 5px;
+            padding: 5px;
+            transition: 0.5s ease-in-out;
+            cursor: pointer;
+  
+            &:hover {
+              background-color: $text;
+            }
+          }
+  
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .combine-inputs {
+          @include flex-two(1rem, row);
+          gap: 1rem;
+          margin-top: 1rem;
+
+          .combine-box,
+          input {
+            width: 100%;
+          }
+
+          @include respond-to(small) {
+            flex-direction: column;
+          }
+        }
+
+        input, textarea {
+          &:focus + .placeholder,
+          &.filled + .placeholder {
+            color: $rose;
+          }
+
+          &:focus {
+            border-color: $rose;
+          }
+        }
+      }
+
+      .skill-form {
+        .img-preview {
+          @include flex(1rem, row);
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
+
+      @include respond-to(small) {
+        padding-bottom: 5rem;
+      }
     }
   }
+}
 
-  .dashboard-content {
-    padding: 3rem 1.5rem;
-  }
-
-  // Table
-  .table {
-    background: rgba(white, 0.75);
-    border: solid 1px table(border-color);
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100%;
-  
-    tr + tr {
-      border-top: solid 1px table(border-color);
-    }
-  
-    tr:nth-child(odd) td {
-      background: #e0e5e6;
-    }
-  
-    td,
-    th {
-      padding: 5px 10px;
-      text-align: left;
-    }
-  
-    th {
-      background: #e0e5e6;
-      font-weight: 600;
-    }
-  
-    // Mobile-first: stacked table
-    &,
-    tbody,
-    tr,
-    td {
-      display: block;
-    }
-  
-    td::before {
-      display: inline-block;
-      font-weight: 600;
-      width: 25%;
-    }
-  
-    td:nth-child(1)::before {
-      content: "Rank";
-    }
-  
-    td:nth-child(2)::before {
-      content: "City";
-    }
-  
-    td:nth-child(3)::before {
-      content: "Country";
-    }
-  
-    td:nth-child(4)::before {
-      content: "Population";
-    }
-  
-    th {
-      display: none;
-    }
-  
-    @media (min-width: 768px) {
-      display: table;
-  
-      tbody {
-        display: table-row-group;
-      }
-  
-      tr {
-        display: table-row;
-      }
-  
-      td::before {
-        display: none;
-      }
-  
-      td,
-      th {
-        display: table-cell;
-      }
-  
-      th {
-        display: table-cell;
-      }
-    }
-  }
-}  
+// Confirmation Modal
+.react-confirm-alert-body > h1 {
+  font-size: 1.5rem !important;
+  line-height: 1 !important;
+  margin-bottom: 1.5rem;
+}
+.react-confirm-alert-overlay {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}

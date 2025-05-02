@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { useDispatch } from "react-redux";
+import { sentMessage } from "../store/slices/contactSlice";
 import Box from "./partials/Box";
 import Popup from "./partials/Popup";
 import Button from "./partials/Button";
@@ -9,8 +11,13 @@ import flowerImg from "../assets/images/flowers/flower-4.png";
 import FooterBox from "./partials/FooterBox";
 
 const Footer = () => {
+  const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
   const flowerRef = useRef(null);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [text, setText] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +40,28 @@ const Footer = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const newMessage = {
+        name,
+        email,
+        text,
+      };
+
+      await dispatch(sentMessage(newMessage)).unwrap();
+
+      setName("");
+      setEmail("");
+      setText("");
+
+      setShowPopup(false);
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
 
   return (
     <>
@@ -74,10 +103,27 @@ const Footer = () => {
       {showPopup && (
         <Popup onClose={() => setShowPopup(false)}>
           <h3>Send a message</h3>
-          <Form>
-            <InputField type="text" placeholder="Your Name" required />
-            <InputField type="email" placeholder="Your Email" required />
-            <InputField type="textarea" placeholder="Your Message" rows={5} required />
+          <Form onSubmit={handleSubmit}>
+            <InputField
+              type="text"
+              placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <InputField
+              type="email"
+              placeholder="Your Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <InputField
+              type="textarea"
+              placeholder="Your Message"
+              rows={5}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
             <Button text="Send"></Button>
           </Form>
         </Popup>

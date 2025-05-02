@@ -103,9 +103,34 @@ const update = async (req, res) => {
     }
 }
 
+const removeImage = async (req, res) => {
+    try {
+      const skill = await Skill.findById(req.params.id);
+      if (!skill) return res.status(404).json({ message: "Skill not found" });
+  
+      // Delete image file if exists
+      if (skill.image) {
+        const imagePath = path.join(__dirname, '..', 'assets', 'skills', path.basename(skill.image));
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+      }
+  
+      skill.image = null;
+      await skill.save();
+  
+      res.status(200).json({ message: "Image deleted", skillId: skill._id }); // return skillId here
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete image" });
+    }
+  };
+  
+  
+
 module.exports = {
     getAll,
     create,
     remove,
-    update
+    update,
+    removeImage,
 }

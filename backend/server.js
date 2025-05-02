@@ -23,6 +23,7 @@ app.use('/auth', require('./routes/auth'))
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/skills', require('./routes/skills'));
 app.use('/api/facts', require('./routes/facts'));
+app.use('/api/contact', require('./routes/contact'));
 
 app.get('/', (req, res) => {
     res.send('API is running...');

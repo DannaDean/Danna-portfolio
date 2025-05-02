@@ -24,11 +24,19 @@ const updateProject = async ({id, updateData}) => {
     return response.data;
 }
 
+const deleteImage = async (projectId, imageType) => {
+    const response = await axios.delete(`${API_URL}${projectId}/delete-image`, {
+      data: { imageType }
+    });
+    return response.data;
+};
+
 const projectsService = {
     getProjects,
     createProject,
     deleteProject,
-    updateProject
+    updateProject,
+    deleteImage
 }
 
 export default projectsService;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsAuth, getUser } from '../src/store/slices/authSlice';
 import { ToastContainer } from 'react-toastify';
@@ -13,6 +13,9 @@ import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Dashboard from './pages/dashboard/Dashboard';
+import Account from './pages/dashboard/update/Account';
+// Contact Form
+import ContactForm from './pages/dashboard/views/ContactForm';
 // Projects
 import Projects from './pages/dashboard/views/Projects';
 import CreateProject from './pages/dashboard/create/Project';
@@ -29,10 +32,15 @@ import EditFact from './pages/dashboard/update/Fact';
 function App() {
   const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth)
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    dispatch(getUser())
-  }, [])
+    dispatch(getUser()).finally(() => setLoading(false));
+  }, [dispatch]);
+  
+  if (loading) {
+    return <div>Loading...</div>; // Or any loader component
+  }
 
   return (
     <>
@@ -47,8 +55,10 @@ function App() {
 
 
         {/* Dashboard Layout */}
-        <Route path="/dashboard" element={<DashLayout />}>
+        <Route path="/dashboard" element={isAuth ? <DashLayout /> : <Navigate to="/login" />}>
           <Route index element={<Dashboard />} />
+          <Route path="contact/form" element={<ContactForm />} />
+          <Route path="account" element={<Account />} />
           <Route path="projects" element={<Projects />} />
           <Route path="create/project" element={<CreateProject />} />
           <Route path="edit/project/:id" element={<EditProject />} />
