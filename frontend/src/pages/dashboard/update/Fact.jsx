@@ -14,6 +14,7 @@ const EditFact = () => {
   const { facts } = useSelector((state) => state.facts);
   const fact = facts.find((f) => f._id === id);
 
+  const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
@@ -30,6 +31,7 @@ const EditFact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
 
     try {
       const updateData = {
@@ -41,7 +43,17 @@ const EditFact = () => {
 
       navigate("/dashboard/facts");
     } catch (error) {
-      console.error(error);
+      const data = error.response?.data || error;
+
+      if (Array.isArray(data)) {
+        const formattedErrors = {};
+        data.forEach((err) => {
+          formattedErrors[err.path] = err.msg;
+        });
+        setErrors(formattedErrors);
+      } else {
+        setErrors({ global: "Something went wrong. Please try again." });
+      }
     }
   };
 
@@ -54,6 +66,7 @@ const EditFact = () => {
           label="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          helperText={errors.title}
         />
         <InputField
             type="textarea"
@@ -61,6 +74,7 @@ const EditFact = () => {
             rows={5}
             value={text}
           onChange={(e) => setText(e.target.value)}
+          helperText={errors.text}
         />
         <Button type="submit" text="Update" />
       </Form>

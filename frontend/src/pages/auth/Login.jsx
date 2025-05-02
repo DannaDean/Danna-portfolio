@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { HeadProvider, Title, Meta } from "react-head";
 
 import "../../assets/css/Auth.scss";
 import Box from "../../components/partials/Box";
@@ -44,6 +45,10 @@ const Login = () => {
   }
 
   return (
+    <HeadProvider>
+    <Title>Login | My Portfolio</Title>
+    <Meta name="description" content="Login to access your dashboard and manage your content." />
+
     <div className="login-page">
       <div className="container">
         <Box
@@ -71,6 +76,7 @@ const Login = () => {
         </Box>
       </div>
     </div>
+    </HeadProvider>
   );
 };
 

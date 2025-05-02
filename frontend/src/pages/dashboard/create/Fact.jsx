@@ -10,11 +10,13 @@ import Button from "../../../components/partials/Button";
 const CreateFact = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({}); 
 
     try {
       const newFact = {
@@ -25,7 +27,17 @@ const CreateFact = () => {
       await dispatch(createFact(newFact)).unwrap();
       navigate("/dashboard/facts");
     } catch (error) {
-      console.error(error);
+      const data = error.response?.data || error;
+
+      if (Array.isArray(data)) {
+        const formattedErrors = {};
+        data.forEach((err) => {
+          formattedErrors[err.path] = err.msg;
+        });
+        setErrors(formattedErrors);
+      } else {
+        setErrors({ global: "Something went wrong. Please try again." });
+      }
     }
   };
 
@@ -38,7 +50,7 @@ const CreateFact = () => {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
+          helperText={errors.title}
         />
         <InputField
           type="textarea"
@@ -46,6 +58,7 @@ const CreateFact = () => {
           rows={5}
           value={text}
           onChange={(e) => setText(e.target.value)}
+          helperText={errors.text}
         />
         <Button type="submit" text="Create"></Button>
       </Form>

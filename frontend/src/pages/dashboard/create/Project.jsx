@@ -12,6 +12,9 @@ import { TrashCan } from "akar-icons";
 const CreateProject = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const [errors, setErrors] = useState({});
+
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [categories, setCategories] = useState("");
@@ -37,6 +40,7 @@ const CreateProject = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({}); 
 
     try {
       let desktopImgUrl = "";
@@ -72,32 +76,44 @@ const CreateProject = () => {
 
       navigate("/dashboard/projects");
     } catch (error) {
-      console.error(error);
+      const data = error.response?.data || error;
+
+      if (Array.isArray(data)) {
+        const formattedErrors = {};
+        data.forEach((err) => {
+          formattedErrors[err.path] = err.msg;
+        });
+        setErrors(formattedErrors);
+      } else {
+        setErrors({ global: "Something went wrong. Please try again." });
+      }
     }
   };
   return (
     <>
       <h2>Create a project</h2>
+      {errors.global && <p className="error">{errors.global}</p>}
       <Form onSubmit={handleSubmit} className="project-form">
         <InputField
           type="text"
           placeholder="Project title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
+          helperText={errors.title}
         />
         <InputField
           type="text"
           placeholder="Project link"
           value={link}
           onChange={(e) => setLink(e.target.value)}
+          helperText={errors.link}
         />
         <InputField
           type="text"
           placeholder="Category"
           value={categories}
           onChange={(e) => setCategories(e.target.value)}
-          required
+          helperText={errors.categories}
         />
         <div className="combine-inputs">
           <div className="combine-box">
