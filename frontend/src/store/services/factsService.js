@@ -1,7 +1,7 @@
 import axios from "../axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-export const API_URL = `${BACKEND_URL}/api/facts/`;
+export const API_URL = `${BACKEND_URL}api/facts/`;
 
 const getFacts = async () => {
     const response = await axios.get(API_URL);
