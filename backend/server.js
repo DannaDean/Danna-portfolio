@@ -33,6 +33,6 @@ const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio';
 mongoose.connect(dbURI)
     .then(() => {
         app.listen(port, () => {
-            console.log(`app listening on port ${port}`)
+            console.log(`App listening on port ${port}`)
         })
     })
