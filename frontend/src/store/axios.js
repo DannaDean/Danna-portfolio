@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const instance = axios.create({
-  baseURL: 'http://localhost:5000', 
+  baseURL: 'https://daniela-portfolio-29c8ecbded2a.herokuapp.com/', 
 });
 
 instance.interceptors.request.use((config) => {
