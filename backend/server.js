@@ -29,7 +29,8 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-mongoose.connect(process.env.MONGODB_URI)
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         app.listen(port, () => {
             console.log(`app listening on port ${port}`)
