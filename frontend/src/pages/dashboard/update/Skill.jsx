@@ -8,8 +8,10 @@ import Form from "../../../components/partials/Form";
 import InputField from "../../../components/partials/InputField";
 import Button from "../../../components/partials/Button";
 import { TrashCan } from "akar-icons";
+import getImageSrc from "../../../utils/getImageSrc";
 
 const EditSkill = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -100,7 +102,8 @@ const EditSkill = () => {
             >
              <TrashCan strokeWidth={2} size={16} />
             </div>
-            <img src={imagePreview} alt="Uploaded Preview" />
+            <img src={getImageSrc(imagePreview, backendUrl)} 
+              alt="Uploaded Preview" />
           </div>
         )}
         <Button type="submit" text="Update" />

@@ -8,8 +8,10 @@ import Form from "../../../components/partials/Form";
 import InputField from "../../../components/partials/InputField";
 import Button from "../../../components/partials/Button";
 import { TrashCan } from "akar-icons";
+import getImageSrc from "../../../utils/getImageSrc";
 
 const Account = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -89,7 +91,7 @@ const Account = () => {
             <div className="delete" onClick={() => handleDeleteImage()}>
               <TrashCan strokeWidth={2} size={16} />
             </div>
-            <img src={avatarPreview} alt="Uploaded Preview" />
+            <img src={getImageSrc(avatarPreview, backendUrl)} alt="Uploaded Preview" />
           </div>
         )}
         <InputField

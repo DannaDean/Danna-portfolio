@@ -1,4 +1,4 @@
-import defaultImage from "../../assets/images/default.jpg";
+import getImageSrc from "../../utils/getImageSrc";
 
 const Project = ({ 
   link = '', 
@@ -7,21 +7,20 @@ const Project = ({
   title = '',
   categories = []
 }) => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   return (
     <a href={link} className="project-card" target="_blank">
       <div className="images-block">
         <div className="proj-img-one">
         <img
-            src={deskImg || defaultImage}
+            src={getImageSrc(deskImg, backendUrl)}
             alt={title}
-            onError={(e) => (e.target.src = defaultImage)}
           />
         </div>
         <div className="proj-img-two">
         <img
-            src={mobileImg || defaultImage}
+            src={getImageSrc(mobileImg, backendUrl)}
             alt={title}
-            onError={(e) => (e.target.src = defaultImage)}
           />
         </div>
       </div>

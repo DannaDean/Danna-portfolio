@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProject, deleteImage, getProjects } from "../../../store/slices/projectsSlice";
+import {
+  updateProject,
+  deleteImage,
+  getProjects,
+} from "../../../store/slices/projectsSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../../store/axios";
 import "../../../assets/css/Dashboard.scss";
@@ -8,8 +12,10 @@ import Form from "../../../components/partials/Form";
 import InputField from "../../../components/partials/InputField";
 import Button from "../../../components/partials/Button";
 import { TrashCan } from "akar-icons";
+import getImageSrc from "../../../utils/getImageSrc";
 
 const EditProject = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -85,7 +91,7 @@ const EditProject = () => {
         title,
         link,
         categories: categories.split(","),
-        deskImg: desktopImgUrl || "", 
+        deskImg: desktopImgUrl || "",
         mobileImg: mobileImgUrl || "",
       };
 
@@ -112,8 +118,10 @@ const EditProject = () => {
   const handleDeleteImage = async (imageType) => {
     try {
       // Dispatch the delete image action
-      await dispatch(deleteImage({ projectId: project._id, imageType })).unwrap();
-  
+      await dispatch(
+        deleteImage({ projectId: project._id, imageType })
+      ).unwrap();
+
       // Update state to remove the image preview
       if (imageType === "desktop") {
         setDeskImgPreview(null); // This will remove the desktop image preview immediately
@@ -124,7 +132,6 @@ const EditProject = () => {
       console.error("Error deleting the image", error);
     }
   };
-  
 
   return (
     <>
@@ -166,7 +173,10 @@ const EditProject = () => {
                 >
                   <TrashCan strokeWidth={2} size={16} />
                 </div>
-                <img src={deskImgPreview} alt="Uploaded Desktop Preview" />
+                <img
+                  src={getImageSrc(deskImgPreview, backendUrl)}
+                  alt="Uploaded Desktop Preview"
+                />
               </div>
             )}
           </div>
@@ -184,7 +194,10 @@ const EditProject = () => {
                 >
                   <TrashCan strokeWidth={2} size={16} />
                 </div>
-                <img src={mobileImgPreview} alt="Uploaded Mobile Preview" />
+                <img
+                  src={getImageSrc(mobileImgPreview, backendUrl)}
+                  alt="Uploaded Mobile Preview"
+                />
               </div>
             )}
           </div>

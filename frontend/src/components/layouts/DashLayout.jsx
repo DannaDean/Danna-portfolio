@@ -10,6 +10,7 @@ import { SignOut } from "akar-icons";
 import Sidebar from "../dashboard/Sidebar";
 
 const DashLayout = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
@@ -60,14 +61,11 @@ const DashLayout = () => {
             <div className="img-default">
               {/* Check if there's an avatarUrl */}
               {avatarPreview ? (
-                <img src={avatarPreview} alt="User Avatar" className="user-img" />
+                <img src={`${backendUrl}${avatarPreview}`} alt="User Avatar" className="user-img" />
               ) : (
                 // If no avatar, show the first letters of the fullName
                 <div className="avatar-initials">
-                  {fullName
-                    .split(" ")
-                    .map((word) => word[0].toUpperCase())
-                    .join("")}
+                  {fullName && fullName.split(" ").map((word) => word[0].toUpperCase()).join("")}
                 </div>
               )}
             </div>

@@ -15,7 +15,7 @@ router.post('/:folder', checkAuth, (req, res, next) => {
             return res.status(500).json({ message: 'Upload error', error: err.message });
         }
         res.json({
-            url: `/assets/${folder}/${req.file.originalname}`,
+            url: `assets/${folder}/${req.file.originalname}`,
         });
     });
 });

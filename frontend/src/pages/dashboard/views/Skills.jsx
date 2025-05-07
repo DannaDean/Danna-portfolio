@@ -9,6 +9,7 @@ import TableItem from "../../../components/dashboard/TableItem";
 import { Plus } from "akar-icons";
 
 const Skills = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const { skills } = useSelector((state) => state.skills);
 
@@ -54,7 +55,7 @@ const Skills = () => {
                 key={skill._id}
                 id={skill._id}
                 data={{
-                  image: skill.image,
+                  image: `${backendUrl}${skill.image}`,
                   title: skill.title,
                 }}
                 type="skill"

@@ -73,13 +73,12 @@ const Hero = ({ isLoading }) => {
         <Box
           title={
             <>
-              Here to make you look <br /> good and win business.
+             Here to bring your ideas to life  <br />  and drive business success.
             </>
           }
           text={
             <>
-              Websites that convert and apps that feel effortless. <br /> Clean,
-              clear, and thoughtfully designed.
+              Web applications that convert, built to perform seamlessly. <br /> Scalable, reliable, and crafted with precision.
             </>
           }
           flowerImg={flowerImg}

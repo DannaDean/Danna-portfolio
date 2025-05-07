@@ -17,7 +17,6 @@ const TableItem = ({
             <img
               src={value || defaultImage}
               alt="preview"
-              onError={(e) => (e.target.src = defaultImage)}
             />
           ) : Array.isArray(value) ? (
             value.join(", ")

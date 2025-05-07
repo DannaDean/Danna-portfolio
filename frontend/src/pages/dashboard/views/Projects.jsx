@@ -12,6 +12,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import TableItem from "../../../components/dashboard/TableItem";
 
 const Projects = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const { projects } = useSelector((state) => state.projects);
 
@@ -58,7 +59,7 @@ const Projects = () => {
                 key={project._id}
                 id={project._id}
                 data={{
-                  image: project.deskImg,
+                  image: `${backendUrl}${project.deskImg}`,
                   title: project.title,
                   categories: project.categories,
                 }}
