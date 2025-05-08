@@ -92,17 +92,17 @@ const Hero = ({ isLoading }) => {
           <HeroCard
             src={myImg}
             title="Home of Ciubari Daniela"
-            text="A independent digital designer set to conquer the world."
+            text="An independent web developer building performant, scalable websites and apps."
           />
           <HeroCard
             src={desktopImg}
-            title="Web Design & Dev"
-            text="Cleanly designed, conversion-focused, and built for easy updates."
+            title="Web Development"
+            text="Clean, efficient code built for performance, security, and long-term maintainability."
           />
           <HeroCard
             src={mobileImg}
-            title="UI/UX Design"
-            text="Seamless web or mobile app design to wow your users."
+            title="Front-End & Back-End"
+            text="Responsive interfaces and powerful back-end logic that bring your ideas to life."
           />
         </div>
       </div>

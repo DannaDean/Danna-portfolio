@@ -75,8 +75,8 @@ const Projects = () => {
     <section className="projects" id="projects">
       <div className="container">
         <Box
-          title="Design is in the details."
-          text="My work is based on timeless design principles, clear copywriting, and well-established UX patterns. Each design is carefully crafted to meet your goals."
+          title="Development is in the details."
+          text="My work is rooted in clean architecture, scalable code, and proven UX patterns. Every line is written with purpose — ensuring your project not only works but works beautifully."
           flowerImg={flowerImg}
           flowerRef={flowerRef}
           bgColor="#FAEBC5"

@@ -70,16 +70,16 @@ const About = () => {
         </div>
         <Box
           title="Nice to meet you!"
-          subtitle="I'm Ciubari Daniela, a Full Stack Developer!"
-          text="My mission is to help companies like yours achieve their goals through modern and efficient web development solutions. I'm here to turn your ideas into digital reality, delivering engaging and intuitive experiences for your users. Let's bring your vision to life together!"
+          subtitle="I'm Ciubari Daniela, a Full Stack Web Developer!"
+          text="My mission is to help companies like yours achieve their goals through modern and efficient web development solutions. I specialize in crafting responsive, user-centered interfaces with clean code and modern frameworks. While I can build across the stack, my strength lies in frontend development — turning designs into smooth, accessible, and engaging digital experiences."
           flowerImg={flowerImg}
           flowerRef={flowerRef}
           className="about-one"
           bgColor="#FFDF2B"
         />
         <Box
-          subtitle="The perfect blend of visual design and UX."
-          text="With a multidisciplinary background in design, I seamlessly blend stunning visuals with intuitive user experiences, all in one cohesive approach."
+          subtitle="The perfect blend of code and UX."
+          text="I transform designs into fast, accessible, and intuitive interfaces, ensuring a seamless user experience that not only looks great but also performs flawlessly across all devices."
           className="about-two"
           bgColor="rgba(238, 238, 57, 1)"
         />
@@ -89,7 +89,7 @@ const About = () => {
           <Category bgColor="#FFBE81">Adaptability</Category>
           <Category bgColor="#FF9999">Empathy</Category>
           <Category bgColor="rgba(237, 187, 249, 1)">Creativity</Category>
-          <Category bgColor="#EEEE39">Health</Category>
+          <Category bgColor="#EEEE39">Innovation</Category>
           <Category bgColor="rgba(237, 187, 249, 1)">Dedication</Category>
           <Category bgColor="#FF9D6560">Perseverance</Category>
         </Box>
