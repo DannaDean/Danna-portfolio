@@ -29,7 +29,7 @@ const skillCreateValidator = [
 
 const factCreateValidator = [
     body('title', 'Title must be at least 5 characters long').isLength({min: 5}).isString(),
-    body('text').optional({ checkFalsy: true }).isString().isLength({ min: 10, max: 500 }).withMessage('Text must be between 10 and 500 characters')
+    body('text').optional({ checkFalsy: true }).isString().isLength({ min: 10, max: 1000 }).withMessage('Text must be between 10 and 500 characters')
 ]
 
 module.exports = {

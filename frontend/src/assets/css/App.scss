@@ -388,7 +388,7 @@ header {
         }
 
         .proj-img-one {
-          width: 67%;
+          width: 75%;
 
           @include respond-to(xsmall) {
             width: 100%;
@@ -396,7 +396,7 @@ header {
         }
 
         .proj-img-two {
-          width: 33%;
+          width: 25%;
 
           @include respond-to(xsmall) {
             display: none;
